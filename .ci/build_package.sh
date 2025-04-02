@@ -52,7 +52,7 @@ rosdep install -y -v --rosdistro=jazzy --from-paths ./
 sudo apt-get -y install python3-pip python3-colcon-common-extensions
 
 # PX4-specific dependency
-python3 -m pip install --user -r $PACKAGE_PATH/Tools/setup/requirements.txt
+python3 -m pip install --break-system-packages --user -r $PACKAGE_PATH/Tools/setup/requirements.txt
 $PACKAGE_PATH/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tool
 
 ## | ---------------- prepare colcon workspace ---------------- |
