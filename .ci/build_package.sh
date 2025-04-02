@@ -49,7 +49,7 @@ sudo apt-get -y install libxslt1-dev
 
 rosdep install -y -v --rosdistro=jazzy --from-paths ./
 
-sudo apt-get -y install python3-colcon-common-extensions
+sudo apt-get -y install python3-pip python3-colcon-common-extensions
 
 # PX4-specific dependency
 python3 -m pip install --user -r $PACKAGE_PATH/Tools/setup/requirements.txt
