@@ -36,9 +36,11 @@ header = """
 
 
 # PX4
-git_describe_cmd = 'git describe --exclude ext/* --always --tags --dirty'
+# git_describe_cmd = 'git describe --exclude ext/* --always --tags --dirty'
+git_describe_cmd = 'git branch --show-current'
 git_tag = subprocess.check_output(git_describe_cmd.split(),
                                   stderr=subprocess.STDOUT).decode('utf-8').strip()
+git_tag = "v"+git_tag
 
 try:
     # get the tag if we're on a tagged commit
