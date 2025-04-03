@@ -66,7 +66,7 @@ cd $WORKSPACE_PATH/
 
 source /opt/ros/jazzy/setup.bash
 
-colcon init
+# colcon init
 # colcon config --profile release --cmake-args -DCMAKE_BUILD_TYPE=Release
 # colcon profile set release
 # colcon config --install
