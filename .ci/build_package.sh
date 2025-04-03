@@ -85,7 +85,7 @@ TMP_PATH=/tmp/px4
 mkdir -p $TMP_PATH/package/DEBIAN
 mkdir -p $TMP_PATH/package/opt/ros/jazzy/share
 
-cp -r $WORKSPACE_PATH/install/share/px4 $TMP_PATH/package/opt/ros/jazzy/share
+cp -r $WORKSPACE_PATH/install/px4/share $TMP_PATH/package/opt/ros/jazzy/share
 
 # extract package version
 VERSION=$(cat $PACKAGE_PATH/package.xml | grep '<version>' | sed -e 's/\s*<\/*version>//g')
