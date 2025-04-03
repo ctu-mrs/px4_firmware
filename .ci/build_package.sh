@@ -53,6 +53,8 @@ sudo apt-get -y install python3-pip python3-colcon-common-extensions
 
 # PX4-specific dependency
 python3 -m pip install --break-system-packages --user -r $PACKAGE_PATH/Tools/setup/requirements.txt
+
+echo "Running PX4's Ubuntu setup script"
 $PACKAGE_PATH/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tool
 
 ## | ---------------- prepare colcon workspace ---------------- |

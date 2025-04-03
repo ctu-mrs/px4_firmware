@@ -33,7 +33,7 @@ if [ -f /.dockerenv ]; then
 	apt-get --quiet -y update && DEBIAN_FRONTEND=noninteractive apt-get --quiet -y install \
 		ca-certificates \
 		gnupg \
-		lsb-core \
+		lsb-base \
 		sudo \
 		wget \
 		;
