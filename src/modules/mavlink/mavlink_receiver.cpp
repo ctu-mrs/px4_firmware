@@ -2204,9 +2204,9 @@ MavlinkReceiver::handle_message_heartbeat(mavlink_message_t *msg)
 int
 MavlinkReceiver::set_message_interval(int msgId, float interval, int data_rate)
 {
-	if (msgId == MAVLINK_MSG_ID_HEARTBEAT) {
-		return PX4_ERROR;
-	}
+	/* if (msgId == MAVLINK_MSG_ID_HEARTBEAT) { */
+	/* 	return PX4_ERROR; */
+	/* } */
 
 	if (data_rate > 0) {
 		_mavlink->set_data_rate(data_rate);
@@ -2227,7 +2227,7 @@ MavlinkReceiver::set_message_interval(int msgId, float interval, int data_rate)
 
 	bool found_id = false;
 
-	if (msgId != 0) {
+	if (msgId >= 0) {
 		const char *stream_name = get_stream_name(msgId);
 
 		if (stream_name != nullptr) {
