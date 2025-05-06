@@ -492,6 +492,40 @@ add_custom_target(install_python_requirements
 	USES_TERMINAL
 )
 
+## --------------------------------------------------------------
+## |      MRS additions to build runnable SITL with colcon      |
+## --------------------------------------------------------------
+
 if(EXISTS "${PX4_SOURCE_DIR}/platforms/${PX4_PLATFORM}/cmake/finalize.cmake")
 	include(finalize)
+
+add_custom_target(trigger_px4_sitl_build ALL
+	COMMAND echo "Starting PX4 SITL build in ${PX4_SOURCE_DIR}..."
+	COMMAND make px4_sitl
+	WORKING_DIRECTORY ${PX4_SOURCE_DIR}
+	COMMENT "Building PX4 SITL (make px4_sitl) as part of ${CMAKE_PROJECT_NAME}"
+	VERBATIM
+)
+
+set(PX4_WORKING_DIRECTORY "${PX4_SOURCE_DIR}/build/px4_sitl_default")
+set(PX4_SITL_EXECUTABLE_PATH "${PX4_WORKING_DIRECTORY}/bin/px4")
+set(PX4_RCS_SCRIPT_PATH "${PX4_SOURCE_DIR}/ROMFS/px4fmu_common/init.d-posix/rcS")
+
+set(WRAPPER_SCRIPT_TEMPLATE "${PX4_SOURCE_DIR}/Tools/scripts/px4_sitl_runner.sh.in")
+set(CONFIGURED_WRAPPER_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/px4_sitl_runner.sh")
+
+configure_file(
+	"${WRAPPER_SCRIPT_TEMPLATE}"
+	"${CONFIGURED_WRAPPER_SCRIPT}"
+	@ONLY
+)
+
+message(STATUS "PX4-Autopilot CMake: Configured SITL runner script: ${CONFIGURED_WRAPPER_SCRIPT}")
+
+install(PROGRAMS "${CONFIGURED_WRAPPER_SCRIPT}"
+	DESTINATION lib/${CMAKE_PROJECT_NAME} # e.g., install/px4/lib/px4/
+	RENAME px4 # Rename the installed script to 'px4'
+)
+message(STATUS "PX4-Autopilot CMake: Set up installation for SITL runner script as 'lib/${CMAKE_PROJECT_NAME}/px4'.")
+
 endif()

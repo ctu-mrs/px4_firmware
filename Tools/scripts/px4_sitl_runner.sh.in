@@ -1,0 +1,37 @@
+#!/bin/bash
+# This script is a wrapper to run PX4 SITL.
+# It's configured by CMake during the colcon build process.
+
+# CMake will replace these placeholders with actual paths
+PX4_SITL_EXECUTABLE="@PX4_SITL_EXECUTABLE_PATH@"
+PX4_WORKING_DIRECTORY="@PX4_WORKING_DIRECTORY@" # The root of the PX4 build directory
+
+# --- Sanity Checks ---
+if [ ! -f "${PX4_SITL_EXECUTABLE}" ]; then
+  echo "Error: PX4 SITL executable not found at ${PX4_SITL_EXECUTABLE}"
+  echo "This might mean 'make px4_sitl' did not complete successfully during 'colcon build'."
+  exit 1
+fi
+
+if [ ! -d "${PX4_WORKING_DIRECTORY}" ]; then
+  echo "Error: PX4 build directory (working directory) not found at ${PX4_WORKING_DIRECTORY}"
+  exit 1
+fi
+
+echo "--- PX4 SITL ROS 2 Runner ---"
+echo "  SITL Executable: ${PX4_SITL_EXECUTABLE}"
+echo "  Working Dir:     ${PX4_WORKING_DIRECTORY}"
+echo "  Arguments:       $@"
+echo "-----------------------------"
+
+# # Navigate to the PX4 build root. This is often important for PX4 SITL
+# # to find other resources or default parameters.
+# cd "${PX4_WORKING_DIRECTORY}" || exit 1
+
+# Execute the PX4 SITL binary with any additional arguments
+# passed to this wrapper script (e.g., vehicle model like 'iris').
+"${PX4_SITL_EXECUTABLE}" -w "${PX4_WORKING_DIRECTORY}" "$@"
+
+
+# Optional: Add cleanup or logging after SITL exits
+echo "PX4 SITL exited."
