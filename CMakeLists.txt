@@ -528,4 +528,11 @@ if(EXISTS "${PX4_SOURCE_DIR}/platforms/${PX4_PLATFORM}/cmake/finalize.cmake")
 	)
 	message(STATUS "PX4-Autopilot CMake: Set up installation for SITL runner script as 'lib/${CMAKE_PROJECT_NAME}/px4'.")
 
+
+	# allow models to be registered
+	install(DIRECTORY Tools/simulation/gz/models
+		DESTINATION share/${PROJECT_NAME}
+	)
+
+
 endif()
