@@ -508,7 +508,7 @@ if(EXISTS "${PX4_SOURCE_DIR}/platforms/${PX4_PLATFORM}/cmake/finalize.cmake")
 	)
 	
 	set(PX4_BUILD_DIR "${PX4_SOURCE_DIR}/build")
-	set(PX4_WORKING_DIRECTORY "${PX4_BUILD_DIR}/px4_sitl_default")
+	# set(PX4_WORKING_DIRECTORY "${PX4_BUILD_DIR}/px4_sitl_default")
 	set(PX4_SITL_EXECUTABLE_PATH "${PX4_WORKING_DIRECTORY}/bin/px4")
 	
 	set(WRAPPER_SCRIPT_TEMPLATE "${PX4_SOURCE_DIR}/Tools/scripts/px4_sitl_runner.sh.in")

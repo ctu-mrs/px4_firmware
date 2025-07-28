@@ -4,7 +4,7 @@
 
 # CMake will replace these placeholders with actual paths
 PX4_SITL_EXECUTABLE="@PX4_SITL_EXECUTABLE_PATH@"
-PX4_WORKING_DIRECTORY="@PX4_WORKING_DIRECTORY@" # The root of the PX4 build directory
+# PX4_WORKING_DIRECTORY="@PX4_WORKING_DIRECTORY@" # The root of the PX4 build directory
 
 # --- Sanity Checks ---
 if [ ! -f "${PX4_SITL_EXECUTABLE}" ]; then
@@ -13,14 +13,14 @@ if [ ! -f "${PX4_SITL_EXECUTABLE}" ]; then
   exit 1
 fi
 
-if [ ! -d "${PX4_WORKING_DIRECTORY}" ]; then
-  echo "Error: PX4 build directory (working directory) not found at ${PX4_WORKING_DIRECTORY}"
-  exit 1
-fi
+# if [ ! -d "${PX4_WORKING_DIRECTORY}" ]; then
+#   echo "Error: PX4 build directory (working directory) not found at ${PX4_WORKING_DIRECTORY}"
+#   exit 1
+# fi
 
 echo "--- PX4 SITL ROS 2 Runner ---"
 echo "  SITL Executable: ${PX4_SITL_EXECUTABLE}"
-echo "  Working Dir:     ${PX4_WORKING_DIRECTORY}"
+# echo "  Working Dir:     ${PX4_WORKING_DIRECTORY}"
 echo "  Arguments:       $@"
 echo "-----------------------------"
 
@@ -30,7 +30,8 @@ echo "-----------------------------"
 
 # Execute the PX4 SITL binary with any additional arguments
 # passed to this wrapper script (e.g., vehicle model like 'iris').
-"${PX4_SITL_EXECUTABLE}" -w "${PX4_WORKING_DIRECTORY}" "$@"
+# "${PX4_SITL_EXECUTABLE}" -w "${PX4_WORKING_DIRECTORY}" "$@"
+"${PX4_SITL_EXECUTABLE}" "$@"
 
 
 # Optional: Add cleanup or logging after SITL exits
