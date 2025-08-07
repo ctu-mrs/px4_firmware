@@ -36,11 +36,7 @@
 
 if(NOT CONFIG)
 	# default to px4_ros2_default if building within a ROS2 colcon environment
-	if(("$ENV{COLCON}" MATCHES "1") AND ("$ENV{ROS_VERSION}" MATCHES "2"))
-		set(CONFIG "px4_ros2_default" CACHE STRING "desired configuration")
-	else()
-		set(CONFIG "px4_sitl_default" CACHE STRING "desired configuration")
-	endif()
+	set(CONFIG "px4_sitl_default" CACHE STRING "desired configuration")
 endif()
 
 if(NOT PX4_CONFIG_FILE)
