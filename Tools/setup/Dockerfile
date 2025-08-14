@@ -41,11 +41,16 @@ RUN apt-get update && apt-get install -y \
 
 RUN gem install tmuxinator
 
+RUN pip install git+https://github.com/SimbeRobotics/colcon-ansi-colors --break-system-packages
+
 RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc && \
     echo "source /opt/ros/jazzy/setup.bash" >> /etc/bash.bashrc
 
 RUN echo "source /root/workspace/install/setup.bash" >> /root/.bashrc && \
     echo "source /root/workspace/install/setup.bash" >> /etc/bash.bashrc
+
+RUN echo "export COLCON_DEFAULT_OUTPUT_STYLE=catkin_tools" >> /root/.bashrc && \
+    echo "export COLCON_DEFAULT_OUTPUT_STYLE=catkin_tools" >> /etc/bash.bashrc
 
 # create user with id 1001 (jenkins docker workflow default)
 RUN useradd --shell /bin/bash -u 1001 -c "" -m user && usermod -a -G dialout user
