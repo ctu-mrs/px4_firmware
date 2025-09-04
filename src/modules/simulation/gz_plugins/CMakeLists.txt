@@ -52,15 +52,17 @@ if (gz-transport_FOUND)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PX4_GZ_PLUGIN_OUTPUT_DIR})
 
     # Add our plugins as subdirectories
-    add_subdirectory(optical_flow)
+    # add_subdirectory(optical_flow)
     add_subdirectory(template_plugin)
     add_subdirectory(gstreamer)
     add_subdirectory(moving_platform_controller)
 
     # Add an alias target for each plugin
     if (TARGET GstCameraSystem)
-        add_custom_target(px4_gz_plugins ALL DEPENDS OpticalFlowSystem MovingPlatformController TemplatePlugin GstCameraSystem)
+        # add_custom_target(px4_gz_plugins ALL DEPENDS OpticalFlowSystem MovingPlatformController TemplatePlugin GstCameraSystem)
+	add_custom_target(px4_gz_plugins ALL DEPENDS MovingPlatformController TemplatePlugin GstCameraSystem)
     else()
-        add_custom_target(px4_gz_plugins ALL DEPENDS OpticalFlowSystem MovingPlatformController TemplatePlugin)
+        # add_custom_target(px4_gz_plugins ALL DEPENDS OpticalFlowSystem MovingPlatformController TemplatePlugin)
+        add_custom_target(px4_gz_plugins ALL DEPENDS MovingPlatformController TemplatePlugin)
     endif()
 endif()
