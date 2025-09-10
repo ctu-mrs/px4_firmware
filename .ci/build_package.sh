@@ -17,6 +17,8 @@ mkdir -p $PACKAGE_PATH
 
 cp -r $MY_PATH/.. $PACKAGE_PATH/
 
+git config --global --add safe.directory $PACKAGE_PATH
+
 ## | ------------ detect current CPU architecture ------------- |
 
 CPU_ARCH=$(uname -m)
@@ -34,34 +36,20 @@ sudo apt-get -y update
 
 rosdep update --include-eol-distros
 
-# without this, the lxml package won't be installed from the internal python dependencies
-sudo apt-get -y install libxslt1-dev
-
-rosdep install -y -v --rosdistro=jazzy --from-paths ./
-
-sudo apt-get -y install 
-
 # PX4-specific dependency
-python3 -m pip install --user -r $PACKAGE_PATH/Tools/setup/requirements.txt
-# $PACKAGE_PATH/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tool
+$PACKAGE_PATH/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tool
 
-## | ---------------- prepare catkin workspace ---------------- |
+## | ----------- prepare and build colcon workspace ----------- |
 
 WORKSPACE_PATH=/tmp/workspace
 
 mkdir -p $WORKSPACE_PATH/src
-cd $WORKSPACE_PATH/
 
 source /opt/ros/jazzy/setup.bash
 
-colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
-
 ln -sf $PACKAGE_PATH $WORKSPACE_PATH/src/px4
 
-## | ------------------------ build px4 ----------------------- |
-
-cd $WORKSPACE_PATH
-catkin build --limit-status-rate 0.2 --summarize --verbose
+colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 ## | -------- extract build artefacts into deb package -------- |
 
