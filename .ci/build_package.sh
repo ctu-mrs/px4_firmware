@@ -59,6 +59,8 @@ source /opt/ros/jazzy/setup.bash
 
 ln -sf $PACKAGE_PATH $WORKSPACE_PATH/src/px4
 
+cd $WORKSPACE_PATH
+
 colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 
 ## | -------- extract build artefacts into deb package -------- |
