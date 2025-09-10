@@ -1,0 +1,22 @@
+name: generic_package_build
+
+on:
+
+  push:
+    branches: [ 1.16.0 ]
+
+  pull_request:
+    branches: [ 1.16.0 ]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    uses: ctu-mrs/ci_scripts/.github/workflows/generic_package_build.yml@ros2
+    secrets:
+      PUSH_TOKEN: ${{ secrets.PUSH_TOKEN }}
