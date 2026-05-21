@@ -35,7 +35,7 @@ if args.filter:
     for board in args.filter.split(','):
         board_filter.append(board)
 
-default_container = 'ghcr.io/px4/px4-dev:v1.16.0-rc1-258-g0369abd556'
+default_container = 'ghcr.io/px4/px4-dev:v1.17.0'
 build_configs = []
 grouped_targets = {}
 excluded_boards = ['modalai_voxl2', 'px4_ros2', 'espressif_esp32']  # TODO: fix and enable

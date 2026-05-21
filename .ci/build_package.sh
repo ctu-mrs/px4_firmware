@@ -36,7 +36,7 @@ cd $PACKAGE_PATH
 GIT_TAG=$(git describe --exact-match --tags HEAD || echo "")
 
 if [[ "$GIT_TAG" == "" ]]; then
-  echo "$0: git tag not recognized! PX4 requires the current commit to be tagged with, e.g., v1.16.0-dev tag."
+  echo "$0: git tag not recognized! PX4 requires the current commit to be tagged with, e.g., v1.17.0-dev tag."
   exit 1
 fi
 
