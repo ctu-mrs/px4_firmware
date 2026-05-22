@@ -14,6 +14,7 @@ set -e
 INSTALL_NUTTX="true"
 INSTALL_SIM="true"
 INSTALL_ARCH=`uname -m`
+RUNS_IN_DOCKER="false"
 
 # Parse arguments
 for arg in "$@"
@@ -29,6 +30,10 @@ done
 
 echo "[ubuntu.sh] Starting..."
 echo "[ubuntu.sh] arch: $INSTALL_ARCH"
+
+if [ -f /.dockerenv ]; then
+	RUNS_IN_DOCKER="true"
+fi
 
 # detect if running in docker
 if [ "$RUNS_IN_DOCKER" = "true" ]; then
