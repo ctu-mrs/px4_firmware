@@ -65,6 +65,7 @@
 #include <uORB/topics/gps_inject_data.h>
 #include <uORB/topics/sensor_gps.h>
 #include <uORB/topics/sensor_gnss_relative.h>
+#include <uORB/topics/debug_vect.h>
 
 #ifndef CONSTRAINED_FLASH
 # include "devices/src/ashtech.h"
@@ -191,6 +192,7 @@ private:
 
 	uORB::PublicationMulti<sensor_gps_s>	_report_gps_pos_pub{ORB_ID(sensor_gps)};	///< uORB pub for gps position
 	uORB::PublicationMulti<sensor_gnss_relative_s> _sensor_gnss_relative_pub{ORB_ID(sensor_gnss_relative)};
+    uORB::Publication<debug_vect_s> _debug_vect_pub{ORB_ID(debug_vect)}; ///< uORB pub for debug vector
 
 	uORB::PublicationMulti<satellite_info_s>	_report_sat_info_pub{ORB_ID(satellite_info)};		///< uORB pub for satellite info
 
@@ -1220,8 +1222,18 @@ GPS::publish()
 		_report_gps_pos.selected_rtcm_instance = _selected_rtcm_instance;
 		_report_gps_pos.rtcm_injection_rate = _rate_rtcm_injection;
 
-		_report_gps_pos_pub.publish(_report_gps_pos);
-		// Heading/yaw data can be updated at a lower rate than the other navigation data.
+        _report_gps_pos_pub.publish(_report_gps_pos);
+        debug_vect_s debug_vect_msg{};
+        // cast from uint64_t to float, which may lose precision but is acceptable for debug purposes
+        float gps_time = (uint32_t)_report_gps_pos.time_utc_usec;
+        debug_vect_msg.timestamp = hrt_absolute_time();
+        debug_vect_msg.x = hrt_absolute_time()/1000.0f;
+        debug_vect_msg.y = gps_time;
+        debug_vect_msg.z = gps_time - hrt_absolute_time();
+        strncpy(debug_vect_msg.name, "forMatous", 10);
+        _debug_vect_pub.publish(debug_vect_msg);
+
+                // Heading/yaw data can be updated at a lower rate than the other navigation data.
 		// The uORB message definition requires this data to be set to a NAN if no new valid data is available.
 		_report_gps_pos.heading = NAN;
 		_is_gps_main_advertised.store(true);
