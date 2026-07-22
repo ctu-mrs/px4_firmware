@@ -1228,8 +1228,8 @@ GPS::publish()
         float gps_time = (uint32_t)_report_gps_pos.time_utc_usec;
         debug_vect_msg.timestamp = hrt_absolute_time();
         debug_vect_msg.x = hrt_absolute_time()/1000.0f;
-        debug_vect_msg.y = gps_time;
-        debug_vect_msg.z = gps_time - hrt_absolute_time();
+        debug_vect_msg.y = gps_time/1000.0f;
+        debug_vect_msg.z = (gps_time - hrt_absolute_time())/1000.0f;
         strncpy(debug_vect_msg.name, "forMatous", 10);
         _debug_vect_pub.publish(debug_vect_msg);
 
