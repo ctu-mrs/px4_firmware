@@ -43,6 +43,7 @@ fi
 ## | ------------------ install dependencies ------------------ |
 
 sudo apt-get -y update
+sudo apt-get -y install dpkg-dev python3-pandas python3-numpy
 
 rosdep update --include-eol-distros
 
@@ -83,8 +84,6 @@ Maintainer: Tomas Baca <tomas.baca@fel.cvut.cz>
 Description: PX4" > $TMP_PATH/package/DEBIAN/control
 
 cd $TMP_PATH
-
-sudo apt-get -y install dpkg-dev
 
 dpkg-deb --build --root-owner-group package
 dpkg-name package.deb
