@@ -1,7 +1,12 @@
 name: Fuzzing
+
+# Disabled in ctu-mrs fork:
+# Upstream PX4 daily fuzz testing is not applicable to this packaging fork,
+# and GitHub Issues are disabled on this repository, causing the failure reporter to crash.
 on:
-  schedule:
-    - cron: '0 6 * * *'  # UTC 6am every day.
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 6 * * *'  # UTC 6am every day.
 
 permissions:
   contents: read
