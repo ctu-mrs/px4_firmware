@@ -11,6 +11,7 @@ MY_PATH=`( cd "$MY_PATH" && pwd )`
 
 ARTIFACTS_FOLDER=$1
 BASE_IMAGE=$2
+ROS_DISTRO=${ROS_DISTRO:-jazzy}
 
 PACKAGE_PATH=/tmp/package_copy
 mkdir -p $PACKAGE_PATH
@@ -45,8 +46,6 @@ fi
 sudo apt-get -y update
 sudo apt-get -y install dpkg-dev python3-pandas python3-numpy
 
-rosdep update --include-eol-distros
-
 # PX4-specific dependency
 $PACKAGE_PATH/Tools/setup/ubuntu.sh --no-nuttx --no-sim-tool
 
@@ -56,7 +55,7 @@ WORKSPACE_PATH=/tmp/workspace
 
 mkdir -p $WORKSPACE_PATH/src
 
-source /opt/ros/jazzy/setup.bash
+source /opt/ros/${ROS_DISTRO}/setup.bash
 
 ln -sf $PACKAGE_PATH $WORKSPACE_PATH/src/px4
 
@@ -69,15 +68,15 @@ colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
 TMP_PATH=/tmp/px4
 
 mkdir -p $TMP_PATH/package/DEBIAN
-mkdir -p $TMP_PATH/package/opt/ros/jazzy
+mkdir -p $TMP_PATH/package/opt/ros/${ROS_DISTRO}
 
-cp -r $WORKSPACE_PATH/install/px4/* $TMP_PATH/package/opt/ros/jazzy/.
+cp -r $WORKSPACE_PATH/install/px4/* $TMP_PATH/package/opt/ros/${ROS_DISTRO}/.
 
 # extract package version
 VERSION=$(cat $PACKAGE_PATH/package.xml | grep '<version>' | sed -e 's/\s*<\/*version>//g')
 echo "$0: Detected version $VERSION"
 
-echo "Package: ros-jazzy-px4
+echo "Package: ros-${ROS_DISTRO}-px4
 Version: $VERSION
 Architecture: $ARCH
 Maintainer: Tomas Baca <tomas.baca@fel.cvut.cz>
